@@ -27,16 +27,16 @@ public class DeliveryCardTest {
 
     @Test
     void shouldBeAcceptedForm() {
-            String deliveryDay = date(3);
-            $("[data-test-id=city] input").setValue("Киров");
-            $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE, (deliveryDay));
-            $("[data-test-id=name] input").setValue("Селиванов-Иванов Петр");
-            $("[data-test-id=phone] input").setValue("+79998881122");
-            $("[data-test-id=agreement]").click();
-            $(By.className("button__text")).click();
-            $x("//*[contains(text(), 'успешно забронирована на')]").shouldBe(hidden, Duration.ofSeconds(15)).getText();
-            $("Встреча успешно забронирована на" + deliveryDay);
-        }
+        String deliveryDay = date(3);
+        $("[data-test-id=city] input").setValue("Киров");
+        $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE, (deliveryDay));
+        $("[data-test-id=name] input").setValue("Селиванов-Иванов Петр");
+        $("[data-test-id=phone] input").setValue("+79998881122");
+        $("[data-test-id=agreement]").click();
+        $(By.className("button__text")).click();
+        $("[data-test-id=notification]").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(exactText("Успешно! Встреча успешно забронирована на " + deliveryDay));
+    }
 
     @Test
     void shouldRuinCityIncorrect() {
@@ -47,7 +47,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("+79998881122");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id='city'].input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Доставка в выбранный город недоступна"));
+        $("[data-test-id='city'].input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(exactText("Доставка в выбранный город недоступна"));
     }
 
     @Test
@@ -59,7 +60,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("+79998881122");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id=date] .input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Заказ на выбранную дату невозможен"));
+        $("[data-test-id=date] .input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(exactText("Заказ на выбранную дату невозможен"));
     }
 
     @Test
@@ -71,7 +73,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("+79998881122");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id=notification] .notification__content").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + deliveryDay));
+        $("[data-test-id=notification] .notification__content").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(exactText("Встреча успешно забронирована на " + deliveryDay));
     }
 
     @Test
@@ -83,7 +86,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("+79998881122");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id=name].input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        $("[data-test-id=name].input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
@@ -95,7 +99,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("79998881122");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id=phone].input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        $("[data-test-id=phone].input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     @Test
@@ -107,7 +112,8 @@ public class DeliveryCardTest {
         $("[data-test-id=phone] input").setValue("+799988811222");
         $("[data-test-id=agreement]").click();
         $(By.className("button__text")).click();
-        $("[data-test-id=phone].input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        $("[data-test-id=phone].input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     @Test
@@ -118,6 +124,7 @@ public class DeliveryCardTest {
         $("[data-test-id=name] input").setValue("Селиванов-Иванов Петр");
         $("[data-test-id=phone] input").setValue("+79998881122");
         $(By.className("button__text")).click();
-        $("[data-test-id=agreement].input_invalid").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Я соглашаюсь с условиями"));
+        $("[data-test-id=agreement].input_invalid").shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Я соглашаюсь с условиями"));
     }
 }
